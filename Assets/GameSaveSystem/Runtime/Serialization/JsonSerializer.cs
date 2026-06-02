@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GameSaveSystem.Serialization
 {
-    [CreateAssetMenu(menuName = "Game Save System/Serialization/JsonSerializer")]
+    [CreateAssetMenu(menuName = "Game Save System/Serialization/Json", fileName = "JsonSerializer", order = 0)]
     public class JsonSerializer : Serializer
     {
         [SerializeField] private bool minimizeJson = false;

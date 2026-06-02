@@ -14,9 +14,11 @@ namespace GameSaveSystem.Core
 
         public static void Initialize()
         {
+            Debug.Log("[SaveManager] Initializing...");
             settings = Resources.Load<SaveManagerSettings>("SaveManagerSettings");
             if (settings == null)
                 settings = ScriptableObject.CreateInstance<SaveManagerSettings>();
+            Debug.Log("[SaveManager] Initialized");
         }
 
         public static async Task<SaveResult> Save<T>(string filename, T saveObject, Storage.Storage storage = null, Serializer serializer = null, Encrypter encrypter = null)

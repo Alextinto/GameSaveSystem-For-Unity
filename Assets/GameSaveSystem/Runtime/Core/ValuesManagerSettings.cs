@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GameSaveSystem.Core
 {
-    [CreateAssetMenu(menuName = "Game Save System/Values Manager Settings")]
+    [CreateAssetMenu(menuName = "Game Save System/Values Manager Settings", fileName = "ValuesManagerSettings", order = 0)]
     public class ValuesManagerSettings : ScriptableObject
     {
         [Header("General Settings")]

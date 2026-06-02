@@ -3,8 +3,8 @@ using UnityEngine;
 namespace GameSaveSystem.Encryption
 {
     [CreateAssetMenu(
-        fileName = "AES Encrypter",
-        menuName = "Game Save System/Encryption/None")]
+        fileName = "NoEncryption",
+        menuName = "Game Save System/Encryption/None", order = 0)]
     public class NoEncryption : Encrypter
     {
         public override string Encrypt(string _)

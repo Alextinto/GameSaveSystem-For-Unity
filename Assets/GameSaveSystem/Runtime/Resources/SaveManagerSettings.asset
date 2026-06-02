@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e00077a482fd2b1e8be096e7d7279bd, type: 3}
-  m_Name: New J Son Serializer
+  m_Script: {fileID: 11500000, guid: cef8d13ad0a84c75d93a890487a35906, type: 3}
+  m_Name: SaveManagerSettings
   m_EditorClassIdentifier: 
-  minimizeJson: 0
+  serializer: {fileID: 11400000, guid: 3ee42fa2acde6e4c68e433f7e744196c, type: 2}
+  encrypter: {fileID: 0}
+  storage: {fileID: 11400000, guid: ca439fa098af162af8c1429a0bba9f24, type: 2}

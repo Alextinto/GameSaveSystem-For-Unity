@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GameSaveSystem.Core
 {
-    [CreateAssetMenu(menuName = "Game Save System/Save Manager Settings")]
+    [CreateAssetMenu(menuName = "Game Save System/Save Manager Settings", fileName = "SaveManagerSettings", order = 0)]
     public class SaveManagerSettings : ScriptableObject
     {
         [Header("Save Settings")]
