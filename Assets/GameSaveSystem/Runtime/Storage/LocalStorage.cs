@@ -5,7 +5,7 @@ using UnityEngine;
 namespace GameSaveSystem.Storage
 {
     [CreateAssetMenu(menuName = "Game Save System/Storage/Local Save Storage")]
-    public class LocalStorage : SaveStorage
+    public class LocalStorage : Storage
     {
         [SerializeField] private string folderName = "Saves";
         //Examples .save .world .data, etc

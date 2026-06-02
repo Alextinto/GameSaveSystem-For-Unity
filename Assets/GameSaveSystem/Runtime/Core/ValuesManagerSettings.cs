@@ -5,10 +5,18 @@ using UnityEngine;
 
 namespace GameSaveSystem.Core
 {
-    [CreateAssetMenu(menuName = "Game Save System/Save Manager Settings")]
-    public class SaveManagerSettings : ScriptableObject
+    [CreateAssetMenu(menuName = "Game Save System/Values Manager Settings")]
+    public class ValuesManagerSettings : ScriptableObject
     {
-        [Header("Save Settings")]
+        [Header("General Settings")]
+        [SerializeField] private string valuesfileName = "values.sav";
+        public string ValuesFileName => valuesfileName;            
+
+        [SerializeField] private bool autoSaveAfterSet = true;
+        public bool AutoSaveAfterSet => autoSaveAfterSet;
+
+
+        [Header("Module Settings")]
         [SerializeField] private Serializer serializer;
         public Serializer Serializer => serializer;
         [SerializeField] private Encrypter encrypter;

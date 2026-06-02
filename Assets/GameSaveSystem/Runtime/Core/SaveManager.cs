@@ -8,29 +8,18 @@ using UnityEngine;
 
 namespace GameSaveSystem.Core
 {
-    public class SaveManager
+    public static class SaveManager
     {
-        private SaveManagerSettings settings;
+        private static SaveManagerSettings settings;
 
-        private static readonly Lazy<SaveManager> lazy = new(() => new SaveManager());
-        public static SaveManager Instance => lazy.Value;
-
-
-        private SaveManager()
-        {
-            InitializeSystem();
-        }
-
-        private void InitializeSystem()
+        public static void Initialize()
         {
             settings = Resources.Load<SaveManagerSettings>("SaveManagerSettings");
-            //Create one
             if (settings == null)
                 settings = ScriptableObject.CreateInstance<SaveManagerSettings>();
         }
 
-
-        public async Task<SaveResult> Save<T>(string filename, T saveObject, SaveStorage storage = null, SaveSerializer serializer = null, SaveEncrypter encrypter = null)
+        public static async Task<SaveResult> Save<T>(string filename, T saveObject, Storage.Storage storage = null, Serializer serializer = null, Encrypter encrypter = null)
         {
             if (storage == null)
                 storage = settings.Storage;
@@ -43,7 +32,6 @@ namespace GameSaveSystem.Core
             {
                 string cleanedFilename = FilenameCleaner.Clean(filename);
                 string save = serializer.Serialize<T>(saveObject);
-                //optional encrypter
                 if (encrypter != null)
                     save = encrypter.Encrypt(save);
                 await storage.Save(cleanedFilename, save);
@@ -56,12 +44,12 @@ namespace GameSaveSystem.Core
             }
         }
 
-        public async Task<SaveResult> Save<T>(string filename, T saveObject)
+        public static async Task<SaveResult> Save<T>(string filename, T saveObject)
         {
             return await Save<T>(filename, saveObject, settings.Storage, settings.Serializer, settings.Encrypter);
         }
 
-        public async Task<T> Load<T>(string filename, SaveStorage storage = null, SaveSerializer serializer = null, SaveEncrypter encrypter = null)
+        public static async Task<T> Load<T>(string filename, Storage.Storage storage = null, Serializer serializer = null, Encrypter encrypter = null)
         {
             if (storage == null)
                 storage = settings.Storage;
@@ -74,7 +62,6 @@ namespace GameSaveSystem.Core
             {
                 string cleanedFilename = FilenameCleaner.Clean(filename);
                 string save = await storage.Load(cleanedFilename);
-                //optional encrypter
                 if (encrypter != null)
                     save = encrypter.Decrypt(save);
                 return serializer.Deserialize<T>(save);
@@ -86,12 +73,12 @@ namespace GameSaveSystem.Core
             }
         }
 
-        public async Task<T> Load<T>(string filename)
+        public static async Task<T> Load<T>(string filename)
         {
             return await Load<T>(filename, settings.Storage, settings.Serializer, settings.Encrypter);
         }
 
-        public async Task<DeleteResult> Delete(string filename, SaveStorage storage = null)
+        public static async Task<DeleteResult> Delete(string filename, Storage.Storage storage = null)
         {
             if (storage == null)
                 storage = settings.Storage;
