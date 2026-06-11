@@ -1,5 +1,5 @@
 using GameSaveSystem.Encryption;
-using GameSaveSystem.Serialization;
+using GameSaveSystem.Serialization.Values;
 using GameSaveSystem.Storage;
 using UnityEngine;
 
@@ -9,7 +9,7 @@ namespace GameSaveSystem.Core
     public class ValuesManagerSettings : ScriptableObject
     {
         [Header("General Settings")]
-        [SerializeField] private string valuesfileName = "values.sav";
+        [SerializeField] private string valuesfileName = "values";
         public string ValuesFileName => valuesfileName;            
 
         [SerializeField] private bool autoSaveAfterSet = true;
@@ -17,8 +17,8 @@ namespace GameSaveSystem.Core
 
 
         [Header("Module Settings")]
-        [SerializeField] private Serializer serializer;
-        public Serializer Serializer => serializer;
+        [SerializeField] private ValuesSerializer valuesSerializer;
+        public ValuesSerializer ValuesSerializer => valuesSerializer;
         [SerializeField] private Encrypter encrypter;
         public Encrypter Encrypter => encrypter;
         [SerializeField] private Storage.Storage storage;

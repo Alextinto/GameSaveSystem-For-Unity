@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameSaveSystem.Serialization
+namespace GameSaveSystem.Serialization.Objects
 {
     public abstract class Serializer : ScriptableObject
     {

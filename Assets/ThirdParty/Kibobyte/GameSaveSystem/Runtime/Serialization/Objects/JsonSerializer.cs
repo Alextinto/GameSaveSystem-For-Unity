@@ -1,9 +1,9 @@
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace GameSaveSystem.Serialization
+namespace GameSaveSystem.Serialization.Objects
 {
-    [CreateAssetMenu(menuName = "Game Save System/Serialization/Json", fileName = "JsonSerializer", order = 0)]
+    [CreateAssetMenu(menuName = "Game Save System/Serialization/Objects/Json", fileName = "JsonSerializer", order = 0)]
     public class JsonSerializer : Serializer
     {
         [SerializeField] private bool minimizeJson = false;

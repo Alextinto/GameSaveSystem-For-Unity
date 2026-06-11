@@ -1,6 +1,8 @@
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using System.Collections.Generic;
+using GameSaveSystem.Tools;
 
 namespace GameSaveSystem.Core
 {
@@ -18,8 +20,7 @@ namespace GameSaveSystem.Core
             if (settings == null)
                 settings = ScriptableObject.CreateInstance<ValuesManagerSettings>();
             Debug.Log("[ValuesManager] Loading buffer...");
-            valueBuffer = await SaveManager.Load<Dictionary<string, string>>(
-                settings.ValuesFileName, settings.Storage, settings.Serializer, settings.Encrypter);
+            valueBuffer = await LoadValues();
 
             if(valueBuffer == null)
             {
@@ -30,13 +31,42 @@ namespace GameSaveSystem.Core
             Debug.Log("[ValuesManager] Initialized");
         }
 
-        private static Task WaitForInitialization() => initTcs.Task;
-
-        public static async Task SaveValues()
+        private static async Task<Dictionary<string, string>> LoadValues()
         {
-            await WaitForInitialization();
-            await SaveManager.Save(settings.ValuesFileName, valueBuffer, settings.Storage, settings.Serializer, settings.Encrypter);
+            try
+            {
+                string filename = FilenameCleaner.Clean(settings.ValuesFileName);
+                string data = await settings.Storage.Load(filename);
+                if (string.IsNullOrEmpty(data))
+                    return null;
+                if (settings.Encrypter != null)
+                    data = settings.Encrypter.Decrypt(data);
+                return settings.ValuesSerializer.Deserialize<Dictionary<string, string>>(data);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[ValuesManager] Unexpected error on Load.\nFilename:{settings.ValuesFileName}\nError{e}");
+                return null;
+            }
         }
+
+        private static async Task SaveValues()
+        {
+            try
+            {
+                string filename = FilenameCleaner.Clean(settings.ValuesFileName);
+                string data = settings.ValuesSerializer.Serialize<Dictionary<string, string>>(valueBuffer);
+                if (settings.Encrypter != null)
+                    data = settings.Encrypter.Encrypt(data);
+                await settings.Storage.Save(filename, data);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[ValuesManager] Unexpected error on Save.\nFilename:{settings.ValuesFileName}\nError{e}");
+            }
+        }
+
+        private static Task WaitForInitialization() => initTcs.Task;
 
         public static async Task SetInt(string key, int value)
         {

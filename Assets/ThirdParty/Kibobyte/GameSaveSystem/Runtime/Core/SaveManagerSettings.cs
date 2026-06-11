@@ -1,5 +1,5 @@
 using GameSaveSystem.Encryption;
-using GameSaveSystem.Serialization;
+using GameSaveSystem.Serialization.Objects;
 using GameSaveSystem.Storage;
 using UnityEngine;
 
