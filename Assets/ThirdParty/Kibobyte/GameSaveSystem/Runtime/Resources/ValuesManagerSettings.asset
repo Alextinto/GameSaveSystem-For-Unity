@@ -15,5 +15,5 @@ MonoBehaviour:
   valuesfileName: values
   autoSaveAfterSet: 1
   valuesSerializer: {fileID: 11400000, guid: 6d957cb31f265fd12909295a5d3c7df3, type: 2}
-  encrypter: {fileID: 0}
+  encrypter: {fileID: 11400000, guid: 248f4ac094044691db4e46545cbe8fb7, type: 2}
   storage: {fileID: 11400000, guid: ca439fa098af162af8c1429a0bba9f24, type: 2}
