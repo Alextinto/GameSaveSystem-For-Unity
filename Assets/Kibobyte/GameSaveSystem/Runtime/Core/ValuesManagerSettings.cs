@@ -10,10 +10,16 @@ namespace GameSaveSystem.Core
     {
         [Header("General Settings")]
         [SerializeField] private string valuesfileName = "values";
-        public string ValuesFileName => valuesfileName;            
+        public string ValuesFileName => valuesfileName;
 
         [SerializeField] private bool autoSaveAfterSet = true;
         public bool AutoSaveAfterSet => autoSaveAfterSet;
+
+        [SerializeField] private InitializationMode initializationMode = InitializationMode.Sync;
+        public InitializationMode InitializationMode => initializationMode;
+
+        [SerializeField] private InitializationMode autoSaveMode = InitializationMode.Sync;
+        public InitializationMode AutoSaveMode => autoSaveMode;
 
 
         [Header("Module Settings")]

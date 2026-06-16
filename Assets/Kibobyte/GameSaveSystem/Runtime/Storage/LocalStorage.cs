@@ -8,10 +8,20 @@ namespace GameSaveSystem.Storage
     public class LocalStorage : Storage
     {
         [SerializeField] private string folderName = "Saves";
-        //Examples .save .world .data, etc
         [SerializeField] private string defaultExtension = "";
 
-        public override async Task Save(string savename, string data)
+        public override void Save(string savename, string data)
+        {
+            string path = GetPath(savename);
+            string directory = Path.GetDirectoryName(path);
+
+            if (!Directory.Exists(directory))
+                Directory.CreateDirectory(directory);
+
+            File.WriteAllText(path, data);
+        }
+
+        public override async Task SaveAsync(string savename, string data)
         {
             string path = GetPath(savename);
             string directory = Path.GetDirectoryName(path);
@@ -22,7 +32,20 @@ namespace GameSaveSystem.Storage
             await File.WriteAllTextAsync(path, data);
         }
 
-        public override async Task<string> Load(string savename)
+        public override string Load(string savename)
+        {
+            string path = GetPath(savename);
+
+            if (!File.Exists(path))
+            {
+                Debug.LogWarning($"[LocalSaveStorage] Save not found: {path}");
+                return null;
+            }
+
+            return File.ReadAllText(path);
+        }
+
+        public override async Task<string> LoadAsync(string savename)
         {
             string path = GetPath(savename);
 
@@ -35,20 +58,24 @@ namespace GameSaveSystem.Storage
             return await File.ReadAllTextAsync(path);
         }
 
-        public override async Task DeleteSave(string savename)
+        public override void Delete(string savename)
         {
             string path = GetPath(savename);
 
             if (File.Exists(path))
             {
                 File.Delete(path);
-                await Task.CompletedTask;
             }
             else
             {
                 Debug.LogWarning($"[LocalSaveStorage] Cannot delete, save not found: {path}");
-                await Task.CompletedTask;
             }
+        }
+
+        public override Task DeleteAsync(string savename)
+        {
+            Delete(savename);
+            return Task.CompletedTask;
         }
 
         private string GetPath(string savename)
