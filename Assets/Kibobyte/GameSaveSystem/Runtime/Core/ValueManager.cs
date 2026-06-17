@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Globalization;
 using GameSaveSystem.Tools;
 
 namespace GameSaveSystem.Core
@@ -148,14 +149,17 @@ namespace GameSaveSystem.Core
 
         public static void SetInt(string key, int value)
         {
-            valueBuffer[key] = value.ToString();
+            valueBuffer[key] = value.ToString(CultureInfo.InvariantCulture);
             AutoSaveValues();
         }
 
         public static int GetInt(string key, int defaultValue)
         {
-            if (valueBuffer.TryGetValue(key, out string valueStr) && int.TryParse(valueStr, out int value))
+            if (valueBuffer.TryGetValue(key, out string valueStr) && int.TryParse(valueStr, NumberStyles.Integer, CultureInfo.InvariantCulture, out int value))
                 return value;
+
+            if(settings.CreateKeyValueIfNotFound)
+                SetInt(key, defaultValue);
             return defaultValue;
         }
 
@@ -165,14 +169,17 @@ namespace GameSaveSystem.Core
 
         public static void SetFloat(string key, float value)
         {
-            valueBuffer[key] = value.ToString();
+            valueBuffer[key] = value.ToString(CultureInfo.InvariantCulture);
             AutoSaveValues();
         }
 
         public static float GetFloat(string key, float defaultValue)
         {
-            if (valueBuffer.TryGetValue(key, out string valueStr) && float.TryParse(valueStr, out float value))
+            if (valueBuffer.TryGetValue(key, out string valueStr) && float.TryParse(valueStr, NumberStyles.Float, CultureInfo.InvariantCulture, out float value))
                 return value;
+
+            if(settings.CreateKeyValueIfNotFound)
+                SetFloat(key, defaultValue);
             return defaultValue;
         }
 
@@ -182,14 +189,17 @@ namespace GameSaveSystem.Core
 
         public static void SetDouble(string key, double value)
         {
-            valueBuffer[key] = value.ToString();
+            valueBuffer[key] = value.ToString(CultureInfo.InvariantCulture);
             AutoSaveValues();
         }
 
         public static double GetDouble(string key, double defaultValue)
         {
-            if (valueBuffer.TryGetValue(key, out string valueStr) && double.TryParse(valueStr, out double value))
+            if (valueBuffer.TryGetValue(key, out string valueStr) && double.TryParse(valueStr, NumberStyles.Float, CultureInfo.InvariantCulture, out double value))
                 return value;
+
+            if(settings.CreateKeyValueIfNotFound)
+                SetDouble(key, defaultValue);
             return defaultValue;
         }
 
@@ -207,6 +217,9 @@ namespace GameSaveSystem.Core
         {
             if (valueBuffer.TryGetValue(key, out string valueStr) && bool.TryParse(valueStr, out bool value))
                 return value;
+
+            if(settings.CreateKeyValueIfNotFound)
+                SetBool(key, defaultValue);
             return defaultValue;
         }
 
@@ -224,6 +237,9 @@ namespace GameSaveSystem.Core
         {
             if (valueBuffer.TryGetValue(key, out string value))
                 return value;
+
+            if(settings.CreateKeyValueIfNotFound)
+                SetString(key, defaultValue);
             return defaultValue;
         }
 

@@ -12,6 +12,9 @@ namespace GameSaveSystem.Core
         [SerializeField] private string valuesfileName = "values";
         public string ValuesFileName => valuesfileName;
 
+        [SerializeField] private bool createValueIfNotFound = true;
+        public bool CreateKeyValueIfNotFound => createValueIfNotFound;
+
         [SerializeField] private bool autoSaveAfterSet = true;
         public bool AutoSaveAfterSet => autoSaveAfterSet;
 
