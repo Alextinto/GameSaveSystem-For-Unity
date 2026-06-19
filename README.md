@@ -8,7 +8,7 @@ A modular, async save system with pluggable serialization, encryption, and stora
 - **Two save modes**: Save complex C# objects/classes with `SaveManager` or simple key-value pairs with `ValuesManager` (like `PlayerPrefs`!)
 - **Create your own modules**: Extend `Serializer`, `Encrypter`, or `Storage` base classes to customize your system
 - **Plug and play**: Auto-initializes at runtime. No GameObjects, no MonoBehaviours, no scene setup required!
-- **Fully async API**: All save, load, and delete operations are asynchronous
+- **Async API compatible**: All save, load, and delete operations asynchronous (or not)
 
 ## Getting Started
 ### Prerequisites
@@ -21,7 +21,7 @@ A modular, async save system with pluggable serialization, encryption, and stora
 git clone https://github.com/Alextinto/GameSaveSystem-For-Unity.git
 ```
 
-- [Download the latest release](https://github.com/Alextinto/GameSaveSystem-For-Unity/releases) *(Work in Progress)*
+- [Download the latest release](https://github.com/Alextinto/GameSaveSystem-For-Unity/releases)
 - [Download from Unity Asset Store](https://assetstore.unity.com/) *(Work in Progress)*
 
 ## Documentation
